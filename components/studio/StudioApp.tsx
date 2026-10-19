@@ -178,7 +178,7 @@ export default function StudioApp() {
   return (
     <div className="min-h-svh bg-paper">
       <StudioHeader stage={stage} />
-      <main className="mx-auto max-w-6xl px-5 py-10 md:px-8 md:py-14">
+      <main className="mx-auto max-w-6xl px-4 py-7 sm:px-5 sm:py-10 md:px-8 md:py-14">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={view}

@@ -104,15 +104,15 @@ export default function ResultsBoard({ brief, concepts, pendingImageIds, imageGe
 
   return (
     <section aria-labelledby="board-title">
-      <div className="flex flex-wrap items-end justify-between gap-4">
+      <div className="flex flex-wrap items-end justify-between gap-3 sm:gap-4">
         <div>
           <p className="text-xs tracking-[0.25em] text-ink/60 uppercase">{loading ? "Writing" : "Your ideas"}</p>
-          <h1 id="board-title" ref={headingRef} tabIndex={-1} className="mt-2 font-display text-4xl text-ink outline-none md:text-5xl">
+          <h1 id="board-title" ref={headingRef} tabIndex={-1} className="mt-2 max-w-[18ch] font-display text-3xl leading-tight text-ink outline-none sm:text-4xl md:max-w-none md:text-5xl">
             {loading ? `Writing ideas for ${brief.productName}…` : <>Three <em>ideas</em> for {brief.productName}</>}
           </h1>
         </div>
         {!loading && (
-          <div className="flex min-h-11 flex-wrap items-center gap-5">
+          <div className="flex min-h-11 w-full flex-wrap items-center gap-x-5 gap-y-1 sm:w-auto">
             <span data-testid="source-badge" className="flex items-center gap-2 text-[11px] tracking-[0.16em] text-ink/75 uppercase">
               <span aria-hidden="true" className="h-2 w-2 rounded-full bg-leaf" />
               {source === "ai" ? "Written by AI" : "Sample ideas"}
@@ -136,7 +136,7 @@ export default function ResultsBoard({ brief, concepts, pendingImageIds, imageGe
       {!loading && pendingImageIds.size > 0 && <MarginNote>Creating images for your ideas. {pendingImageIds.size} {pendingImageIds.size === 1 ? "image remains" : "images remain"}; they’ll appear as they finish.</MarginNote>}
       {!loading && imageNotice && <MarginNote>{imageNotice}</MarginNote>}
 
-      <div className="mt-12 grid gap-12 pb-12 md:grid-cols-3 lg:gap-10">
+      <div className="mt-8 grid gap-10 pb-8 sm:mt-12 sm:gap-12 sm:pb-12 md:grid-cols-3 lg:gap-10">
         {loading
           ? [0, 1, 2].map((i) => <SkeletonCard key={i} />)
           : concepts.map((c, i) => (

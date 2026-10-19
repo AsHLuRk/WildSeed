@@ -15,12 +15,12 @@ export default function Nav({ visible }: { visible: boolean }) {
       initial={{ opacity: 0, y: -12 }}
       animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-x-0 top-0 z-40 flex items-center justify-between bg-paper/70 px-5 py-4 backdrop-blur-md md:px-10"
+      className="fixed inset-x-0 top-0 z-40 flex items-center justify-between gap-3 bg-paper/70 px-4 py-3 backdrop-blur-md md:px-10 md:py-4"
     >
-      <a href="#top" className="font-display text-2xl text-ink">
+      <a href="#top" className="shrink-0 font-display text-xl text-ink sm:text-2xl">
         Wildseed
       </a>
-      <nav aria-label="Primary" className="flex items-center gap-6">
+      <nav aria-label="Primary" className="flex items-center gap-3 sm:gap-6">
         <ul className="hidden items-center gap-6 text-sm text-ink/80 md:flex">
           {LINKS.map((l) => (
             <li key={l.href}>
@@ -32,7 +32,7 @@ export default function Nav({ visible }: { visible: boolean }) {
         </ul>
         <Link
           href="/studio"
-          className="rounded-full bg-coral px-4 py-2 text-sm font-medium text-ink transition-transform hover:scale-[1.03]"
+          className="min-h-11 rounded-full bg-coral px-3 py-2 text-xs font-medium text-ink transition-transform hover:scale-[1.03] sm:px-4 sm:text-sm"
         >
           Try the Studio
         </Link>

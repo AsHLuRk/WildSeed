@@ -103,7 +103,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 pt-16 md:px-10 md:pt-24">
         <p className="-mb-[0.12em] whitespace-nowrap font-display text-[clamp(5rem,22vw,20rem)] leading-[0.72] tracking-[-0.05em] text-[#DCE6D5]">Wildseed</p>
         <div className="flex flex-col gap-3 border-t border-line py-8 text-sm text-ink/65 md:flex-row md:items-center md:justify-between">
-          <p>Sample site: Wildseed is a fictional studio and all data is made up. Visuals are AI-generated.</p>
+          <p>Sample site: Wildseed is a fictional studio and all data is made up.</p>
           <p className="font-display text-xl text-ink">Field notes / 2025</p>
         </div>
       </div>

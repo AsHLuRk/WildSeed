@@ -65,7 +65,7 @@ export default function SharedAds({ payload }: { payload: SharePayload }) {
       </div>
 
       <footer className="mt-16 border-t border-line pt-6 text-sm text-ink/60">
-        Made with Wildseed Studio. Wildseed is a fictional studio and the product is made up. Visuals are AI-generated.
+        Made with Wildseed Studio. Wildseed is a fictional studio and the product is made up.
       </footer>
     </main>
   );

@@ -101,14 +101,14 @@ export default function ConceptEditor({ brief, concept, index, tab, onTab, onCha
 
   return (
     <section aria-labelledby="editor-title">
-      <div className="flex flex-wrap items-end justify-between gap-4">
+      <div className="flex flex-wrap items-end justify-between gap-3 sm:gap-4">
         <div>
           <p className="text-[11px] tracking-[0.22em] text-ink/60 uppercase">Idea {index + 1} · {["Benefit-led", "Story-led", "Offer-led"][index] ?? "Concept"}</p>
           <h1 id="editor-title" ref={headingRef} tabIndex={-1} className="mt-4 font-display text-[clamp(2.25rem,4.5vw,3.75rem)] leading-none tracking-[-0.03em] text-ink outline-none">
             Edit and <em>preview</em>
           </h1>
         </div>
-        <div className="flex items-center gap-5">
+        <div className="flex w-full items-center justify-between gap-4 sm:w-auto sm:justify-start sm:gap-5">
           <button type="button" onClick={onBack} className="group/action relative flex min-h-11 items-center gap-2 px-0 text-sm font-medium text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
             <span aria-hidden="true">&lt;-</span> Back to ideas
             <span aria-hidden="true" className="absolute right-0 bottom-1 left-0 h-px origin-left scale-x-0 bg-ink transition-transform duration-300 group-hover/action:scale-x-100 group-focus-visible/action:scale-x-100" />
@@ -122,7 +122,7 @@ export default function ConceptEditor({ brief, concept, index, tab, onTab, onCha
 
       {slot}
 
-      <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)]">
+      <div className="mt-6 grid gap-8 sm:mt-8 sm:gap-10 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)]">
         <div className="order-2 max-w-[30rem] space-y-14 lg:order-1">
           <section aria-labelledby="words-title" className="space-y-7">
             <h2 id="words-title" className="flex items-center gap-4 border-b border-line pb-3 text-[11px] tracking-[0.18em] text-ink/70 uppercase"><span className="font-display text-xl text-coral">01</span> The words</h2>

@@ -25,11 +25,11 @@ export default function StudioHeader({ stage }: { stage: StudioStage }) {
   const current = stepOf(stage);
   return (
     <header className="border-b border-line print:hidden">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 md:px-8">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 py-3 sm:px-5 sm:py-4 md:flex-nowrap md:px-8">
         <Link href="/" className="font-display text-2xl text-ink">
           Wildseed <span className="ml-1 font-sans text-sm text-ink/55">Studio</span>
         </Link>
-        <ol aria-label="Progress" className="flex items-start text-[11px] tracking-[0.16em] text-ink/60 uppercase">
+        <ol aria-label="Progress" className="flex max-w-full items-start text-[10px] tracking-[0.12em] text-ink/60 uppercase sm:text-[11px] sm:tracking-[0.16em]">
           {STEPS.map((label, i) => (
             <li key={label} className="flex items-start">
               <div aria-current={i === current ? "step" : undefined} className={`flex items-center gap-2 ${i === current ? "font-medium text-ink" : i < current ? "text-leaf" : "text-ink/50"}`}>
