@@ -26,7 +26,7 @@ export function Services() {
             Three ways we help you <em className="text-coral">grow.</em>
           </h2>
           <p className="mt-8 max-w-sm text-[17px] leading-[1.65] text-ink/70">Good growth starts with a clear place to put your attention.</p>
-          <p className="mt-16 hidden font-display text-lg italic text-leaf lg:block">Field notes, 2025</p>
+          <p className="mt-16 hidden font-display text-lg italic text-leaf lg:block">Field notes, 2026</p>
         </div>
         <div className="lg:col-span-7 lg:col-start-6">
           {SERVICES.map((service, index) => <MotionChapter key={service.n} service={service} index={index} />)}
@@ -104,7 +104,7 @@ export function Footer() {
         <p className="-mb-[0.12em] whitespace-nowrap font-display text-[clamp(5rem,22vw,20rem)] leading-[0.72] tracking-[-0.05em] text-[#DCE6D5]">Wildseed</p>
         <div className="flex flex-col gap-3 border-t border-line py-8 text-sm text-ink/65 md:flex-row md:items-center md:justify-between">
           <p>Sample site: Wildseed is a fictional studio and all data is made up.</p>
-          <p className="font-display text-xl text-ink">Field notes / 2025</p>
+          <p className="font-display text-xl text-ink">Field notes / 2026</p>
         </div>
       </div>
     </footer>
