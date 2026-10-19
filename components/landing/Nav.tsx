@@ -32,7 +32,7 @@ export default function Nav({ visible }: { visible: boolean }) {
         </ul>
         <Link
           href="/studio"
-          className="min-h-11 rounded-full bg-coral px-3 py-2 text-xs font-medium text-ink transition-transform hover:scale-[1.03] sm:px-4 sm:text-sm"
+          className="inline-flex min-h-11 items-center justify-center rounded-full bg-coral px-3 py-2 text-center text-xs font-medium text-ink transition-transform hover:scale-[1.03] sm:px-4 sm:text-sm"
         >
           Try the Studio
         </Link>
