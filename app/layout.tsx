@@ -14,6 +14,13 @@ const body = DM_Sans({ subsets: ["latin"], variable: "--nf-body", display: "swap
 export const metadata: Metadata = {
   title: "Wildseed | Growth marketing studio (sample site)",
   description: "A fictional growth marketing studio. Sample site with a scroll-driven seed-to-bloom animation.",
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+  },
+  manifest: "/manifest.webmanifest",
 };
 
 export const viewport: Viewport = {
