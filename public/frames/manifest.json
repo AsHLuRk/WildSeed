@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "ext": "webp",
+  "desktop": [
+    {
+      "dir": "/frames/a",
+      "count": 96
+    },
+    {
+      "dir": "/frames/b",
+      "count": 96
+    }
+  ],
+  "mobile": [
+    {
+      "dir": "/frames/a-m",
+      "count": 96
+    },
+    {
+      "dir": "/frames/b-m",
+      "count": 96
+    }
+  ],
+  "introEndFrac": 0.25
+}

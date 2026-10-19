@@ -1,0 +1,184 @@
+WILDSEED PROJECT — CHANGE REPORT
+Generated: 2026-10-19
+
+SCOPE
+This report summarizes the Wildseed landing page and Studio integration and the
+follow-up backend, Supabase, and image-generation work discussed in this chat.
+It describes the project files currently present in the working tree and the
+runtime setup steps discussed. It does not contain API keys or other secrets.
+
+OVERVIEW
+The root route (/) is the scroll-driven Wildseed marketing landing page. The ad
+Studio is available at /studio. The project includes API routes for generating
+ad concepts, requesting product visuals, storing/retrieving generated images,
+and saving/loading share links. Demo concepts and fallback artwork remain
+available if AI or image services are unavailable.
+
+MODIFIED PROJECT FILES
+
+Root configuration and documentation
+- .gitignore — continues to ignore local environment files while allowing
+  .env.example to be tracked.
+- package.json — adds Framer Motion, GSAP, Lenis, Zod, and Vitest dependencies;
+  updates Node type definitions; adds the `frames` script.
+- package-lock.json — lockfile updated to match package.json.
+- .env.example — documents the server-side variables for text generation,
+  Supabase, Cloudflare image generation, and rate limits. It contains
+  placeholders only, not working credentials.
+- README.md — documents backend routes, AI/demo fallback behavior, Supabase
+  setup, Cloudflare Workers AI setup, image-generation limits, and verification.
+- README-landing.md — documents the landing animation, frame-generation
+  workflow, tuning options, and troubleshooting.
+- PROJECT-CHANGES.txt — this report.
+
+Pages and global presentation
+- app/page.tsx — replaces the starter page with the landing story, services,
+  process, proof, call to action, footer, and smooth-scroll wrapper.
+- app/layout.tsx — sets Wildseed metadata and viewport theme color and loads the
+  Fraunces display and DM Sans body fonts.
+- app/globals.css — adds the light Wildseed palette, Tailwind theme tokens,
+  global typography/selection styles, Lenis base styles, and reduced-motion
+  handling.
+- app/not-found.tsx — adds the project's not-found page.
+- app/studio/page.tsx — exposes the ad-generation Studio at /studio.
+- app/share/[id]/page.tsx — displays a saved, shareable ad set.
+
+API routes
+- app/api/generate/route.ts — validates briefs; returns demo concepts or calls
+  the configured text model; falls back to demo content when AI is disabled,
+  rate-limited, unavailable, or returns unusable output.
+- app/api/status/route.ts — reports whether AI, image generation, sharing, and
+  the rate-limit backend are configured without returning secrets.
+- app/api/share/route.ts — validates and rate-limits share saves, persists the
+  payload in Supabase, and returns a share ID/path.
+- app/api/share/[id]/route.ts — validates an ID and loads the stored share.
+- app/api/image/route.ts — validates image requests, checks configuration and
+  the private storage bucket, applies image limits, generates an image through
+  Cloudflare Workers AI, and stores it in Supabase Storage.
+- app/api/generated-images/[id]/route.ts — validates an image UUID and streams
+  the corresponding private Supabase object through the app for previews and
+  share pages.
+
+Landing-page components
+- components/landing/FrameSequence.tsx — loads and scroll-scrubs the frame
+  animation, including its intro and responsive frame sequence.
+- components/landing/Hero.tsx — landing hero content and calls to action.
+- components/landing/LandingStory.tsx — assembles the animated story section.
+- components/landing/Loader.tsx — loading state for the story frames.
+- components/landing/Nav.tsx — landing navigation.
+- components/landing/Sections.tsx — services, process, proof, CTA, and footer
+  content.
+- components/landing/SmoothScroll.tsx — initializes the smooth-scroll layer.
+- components/landing/StoryBeats.tsx — timed story copy layered over animation.
+- components/landing/lenis.ts — Lenis integration helper.
+
+Studio components
+- components/studio/StudioApp.tsx — manages the brief, concept generation,
+  result board, background image generation, editing, and sharing flow.
+- components/studio/BriefForm.tsx — product brief form and field validation UI.
+- components/studio/ResultsBoard.tsx — displays the generated concepts and
+  image-generation state/notice.
+- components/studio/ConceptEditor.tsx — edits an idea, previews platform copy,
+  and requests/regenerates its image.
+- components/studio/Previews.tsx — renders ad previews for supported platforms.
+- components/studio/ProductImage.tsx — selects generated or fallback artwork
+  and handles image load failures.
+- components/studio/ShareBar.tsx — share-link controls and save state.
+- components/studio/SharedAds.tsx — presentation of saved ad concepts.
+- components/studio/StudioHeader.tsx — Studio navigation and stage header.
+- components/studio/Counter.tsx — text-length counter UI.
+
+Shared libraries
+- lib/client.ts — typed browser helpers for status, generation, images, and
+  share APIs.
+- lib/schemas.ts — shared Zod schemas, input validation, and response types.
+- lib/types.ts — shared TypeScript types.
+- lib/http.ts — JSON request/response, origin, payload-size, and client-IP
+  helpers for API routes.
+- lib/env.ts — environment-value parsing helpers.
+- lib/sampleConcepts.ts — demo brief and fallback concept generation.
+- lib/prompt.ts — text-generation prompt construction.
+- lib/llm.ts — server-side text-model configuration and request handling.
+- lib/generate.ts — AI response parsing/validation and concept creation.
+- lib/platforms.ts — platform copy limits, counting, and formatting helpers.
+- lib/rateLimit.ts — fixed-window per-IP/daily limiter; uses Upstash if
+  configured and an in-memory fallback otherwise.
+- lib/cloudflareImages.ts — calls Cloudflare's FLUX.1 Schnell Workers AI model,
+  validates the returned image, times out slow requests, checks raw bearer-token
+  formatting, and redacts credentials from diagnostic messages.
+- lib/imagePrompt.ts — builds product-image prompts from the supplied brief and
+  visual direction, treating product facts as authoritative and restricting
+  unsupported claims, text, and logos.
+- lib/supabase.ts — server-only PostgREST and Storage access for shares and
+  generated images; supports current `sb_` secret keys via `apikey` and legacy
+  service-role JWTs via the expected authorization headers.
+- lib/studio/format.ts — Studio formatting helpers.
+- lib/studio/images.ts — fallback image selection helpers.
+- lib/studio/limits.ts — Studio text/platform limit helpers.
+- lib/studio/validation.ts — brief-form validation and conversion helpers.
+- lib/studio/warnings.ts — user-facing generation result warnings.
+- lib/landing/beats.ts — landing story beat content and scroll positions.
+- lib/landing/sequence.ts — responsive frame sequence/manifest helpers.
+
+Supabase, frame generation, and tests
+- supabase/schema.sql — creates the persistence schema for share links.
+- supabase/generated-images.sql — creates/configures the private
+  `wildseed-generated-images` storage bucket for JPEGs, with a 5 MB object cap.
+- scripts/make-frames.mjs — converts the source clips into optimized desktop
+  and mobile WebP frame sequences and writes the manifest.
+- source/v1.mp4 and source/v2.mp4 — source clips used by the landing animation.
+- public/frames/manifest.json — frame sequence metadata used by the landing
+  page.
+- public/frames/a/f_0001.webp through f_0096.webp — 96 desktop frames for clip A.
+- public/frames/a-m/f_0001.webp through f_0096.webp — 96 mobile frames for clip A.
+- public/frames/b/f_0001.webp through f_0096.webp — 96 desktop frames for clip B.
+- public/frames/b-m/f_0001.webp through f_0096.webp — 96 mobile frames for clip B.
+  The four frame folders contain 384 WebP frames total.
+- vitest.config.mts — Vitest configuration.
+- tests/landing.test.ts — landing sequence/animation tests.
+- tests/routes.test.ts — API route tests.
+- tests/unit.test.ts — unit tests for shared logic.
+
+REFERENCE DOCUMENT
+- Claude-Adding impressive UI projects to Java backend resume-20261018-2143.md
+  is a user-supplied project reference document present in the workspace. It was
+  not modified as part of the code integration and its contents are not treated
+  as project instructions in this report.
+
+SUPABASE AND IMAGE-GENERATION SETUP DISCUSSED
+- The Supabase REST client appends `/rest/v1/...` and `/storage/v1/...` paths
+  itself, so `SUPABASE_URL` must be the project root URL rather than a URL that
+  already includes `/rest/v1`.
+- The user confirmed running `supabase/generated-images.sql` in Supabase SQL
+  Editor.
+- Cloudflare settings are read from the server runtime as
+  `ENABLE_IMAGE_GENERATION`, `CLOUDFLARE_ACCOUNT_ID`, and
+  `CLOUDFLARE_API_TOKEN`. They must be available to the same process that runs
+  the Next.js server. The token is raw (no `Bearer` prefix) and should have
+  Account → Workers AI → Read permission.
+- `.env.local` is local/ignored and was not included in this report. No token,
+  Supabase key, or other credential value is included here.
+- Runtime logs shared in chat showed one generated image stored successfully
+  (`POST /api/image 201`) and served successfully (`GET /api/generated-images/…
+  200`). Later image requests returned `429`.
+- The current local rate-limit settings reported during troubleshooting are
+  `IMAGE_RATE_LIMIT=3` per IP per hour and `IMAGE_DAILY_CAP=20`. The Studio
+  requests three images for each generated set. Without Upstash, local limits
+  use in-memory counters, which reset when the dev server process restarts.
+
+ITEMS NOT COMPLETED BY THESE CHANGES
+- Real product photography for the four fallback product-image slots was not
+  added; fallback artwork is still used when an image has not been generated.
+- No deployment, production environment setup, domain setup, or resume packaging
+  was performed.
+- Runtime credentials are not verified by this text file. A Cloudflare token
+  was exposed in chat during troubleshooting; confirm that exposed token has
+  been revoked and replaced. Never put the token in this report or send it in
+  chat.
+
+VERIFICATION NOTES
+- This report records the successful image-generation/storage/serve requests
+  shown in the user's logs and the subsequent rate-limit responses.
+- Earlier code work included a TypeScript no-emit check and `git diff --check`.
+  This report itself is documentation; no deployment or end-to-end test was run
+  while creating it.
