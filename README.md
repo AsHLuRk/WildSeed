@@ -5,6 +5,8 @@ Next.js. The landing page turns a seed-to-bloom frame sequence into an
 interactive story, while `/studio` lets users turn a product brief into
 editable ad concepts and platform previews.
 
+LIVE URL: [https://wildseed-iota.vercel.app/](https://wildseed-iota.vercel.app/)
+
 > **Portfolio/demo project:** Wildseed is a fictional studio. Product examples,
 > performance numbers, and generated creative are sample content. Review
 > generated output before using it in production.
